@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>MOUNTAIN - Guía Operativa v2.0</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+        :root {
+            --brand-navy: #0A284B;
+            --text-dark: #1F2937;
+            --text-light: #6B7280;
+            --border-color: #E5E7EB;
+            --cat1-red: #B84141;
+            --cat1-bg: #FEF2F2;
+            --cat2-amber: #D97706;
+            --cat2-bg: #FFFBEB;
+            --cat3-blue: #2563EB;
+            --cat3-bg: #EFF6FF;
+            --medical-teal: #0d9488; /* Color para sección médica */
+            --medical-bg: #f0fdfa;
+            --psych-purple: #7e22ce; /* Color para sección psique */
+            --psych-bg: #faf5ff;
+            --page-width: 210mm;
+            --page-height: 297mm;
+        }
+
+        * { box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f3f4f6;
+            font-family: 'Inter', sans-serif;
+            color: var(--text-dark);
+            font-size: 11pt;
+        }
+
+        .page {
+            width: var(--page-width);
+            height: var(--page-height);
+            background: white;
+            margin: 20px auto;
+            padding: 15mm 15mm;
+            position: relative;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        @media print {
+            body { background: white; }
+            .page { margin: 0; box-shadow: none; break-after: always; page-break-after: always; height: auto; min-height: 297mm; }
+        }
+
+        /* HEADER SYSTEM */
+        header {
+            border-bottom: 2px solid var(--brand-navy);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .brand-block h1 {
+            font-size: 24pt;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: var(--brand-navy);
+            margin: 0;
+            line-height: 1;
+        }
+
+        .brand-block span {
+            font-size: 9pt;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-light);
+            display: block;
+            margin-top: 4px;
+        }
+
+        .meta-block {
+            text-align: right;
+            font-size: 8pt;
+            color: var(--text-light);
+            font-family: monospace;
+        }
+
+        /* TYPOGRAPHY & LAYOUT */
+        h2 { font-size: 16pt; margin: 0 0 10px 0; color: var(--brand-navy); border-left: 4px solid var(--brand-navy); padding-left: 10px; }
+        h3 { font-size: 11pt; margin: 10px 0 5px 0; color: var(--text-dark); font-weight: 700; text-transform: uppercase; }
+        
+        .section { margin-bottom: 15px; }
+        
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; }
+
+        .box {
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            border-radius: 4px;
+        }
+
+        ul { margin: 5px 0; padding-left: 20px; }
+        li { margin-bottom: 4px; }
+
+        /* RISK CATEGORIES CHIPS */
+        .chip {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 8pt;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+        .c1 { color: var(--cat1-red); background: var(--cat1-bg); border: 1px solid var(--cat1-red); }
+        .c2 { color: var(--cat2-amber); background: var(--cat2-bg); border: 1px solid var(--cat2-amber); }
+        .c3 { color: var(--cat3-blue); background: var(--cat3-bg); border: 1px solid var(--cat3-blue); }
+
+        /* FORMS & TEMPLATES STYLES */
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 6px;
+            padding: 6px;
+            background: #F9FAFB;
+            border-bottom: 1px solid #E5E7EB;
+            font-size: 10pt;
+        }
+        .checkbox {
+            width: 14px; height: 14px; border: 1px solid #9CA3AF; margin-right: 10px; background: white; margin-top: 2px; flex-shrink: 0;
+        }
+        
+        .form-row {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px dashed #ccc;
+            padding: 4px 0;
+            margin-bottom: 4px;
+            font-family: monospace;
+            font-size: 9pt;
+        }
+        
+        .eval-box {
+            border: 1px solid;
+            border-radius: 6px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        .eval-medical { border-color: var(--medical-teal); background: var(--medical-bg); }
+        .eval-psych { border-color: var(--psych-purple); background: var(--psych-bg); }
+        
+        .eval-header {
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 10pt;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            padding-bottom: 4px;
+            border-bottom: 2px solid;
+        }
+
+        .risk-selector {
+            display: flex;
+            gap: 10px;
+            margin-top: 5px;
+            font-size: 9pt;
+            font-weight: bold;
+        }
+        .risk-option {
+            border: 1px solid #ccc;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background: white;
+        }
+
+        /* FLOWCHART STYLES */
+        .flow-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .node {
+            border: 2px solid var(--brand-navy);
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 700;
+            background: white;
+            width: 80%;
+            position: relative;
+        }
+        .arrow-down {
+            width: 2px;
+            height: 15px;
+            background: var(--brand-navy);
+        }
+        .decision-fork {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            gap: 10px;
+        }
+        .branch {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-top: 2px solid var(--brand-navy);
+            padding-top: 15px;
+            position: relative;
+        }
+        .branch::before {
+            content: '';
+            position: absolute;
+            top: -17px; 
+            height: 15px;
+            width: 2px;
+            background: var(--brand-navy);
+        }
+        
+        /* FOOTER */
+        footer {
+            position: absolute;
+            bottom: 15mm;
+            left: 15mm;
+            right: 15mm;
+            border-top: 1px solid #E5E7EB;
+            padding-top: 10px;
+            font-size: 8pt;
+            color: var(--text-light);
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page">
+        <header>
+            <div class="brand-block">
+                <h1>MOUNTAIN</h1>
+                <span>Guía Operativa de Screening Clínico</span>
+            </div>
+            <div class="meta-block">
+                DOC: MTN-SCR-SOP-01<br>
+                VER: 1.0<br>
+                <strong>PRE-SCREEN RÁPIDO</strong>
+            </div>
+        </header>
+
+        <h2>SOP-01: Pre-screen Rápido <span class="time-badge" style="float:right; font-size:10pt; background:#eee; padding:2px 5px;">5-10 min</span></h2>
+        <p><strong>Objetivo:</strong> Filtrar contraindicaciones absolutas antes de agendar evaluación profunda.</p>
+
+        <div class="section">
+            <h3>Checklist Binario (SI/NO)</h3>
+            <div class="box">
+                <div class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div><strong>Cardiovascular:</strong> ¿Hipertensión no controlada, arritmias o historial de infarto?</div>
+                </div>
+                <div class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div><strong>Neurológico:</strong> ¿Epilepsia o historial de convulsiones?</div>
+                </div>
+                <div class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div><strong>Psiquiátrico (Dx):</strong> ¿Diagnóstico de esquizofrenia, bipolaridad I o trastorno psicótico?</div>
+                </div>
+                <div class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div><strong>Medicación Activa:</strong> ¿Usa ISRS, antipsicóticos o benzodiacepinas actualmente?</div>
+                </div>
+                <div class="checklist-item">
+                    <div class="checkbox"></div>
+                    <div><strong>Contexto:</strong> ¿Consumo reciente de sustancias o ausencia total de red de apoyo?</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>Matriz de Decisión Inicial</h3>
+            <div class="grid-3">
+                <div class="box" style="border-top: 4px solid var(--cat1-red);">
+                    <div class="chip c1">Categoría 1</div>
+                    <p style="font-size:9pt; margin-top:5px;">Cualquier "SÍ" en Cardiovascular, Neurológico o Psiquiátrico mayor.</p>
+                    <div style="color:#7F1D1D; font-weight:bold; font-size:9pt; background:#FEF2F2; padding:5px;">STOP. Derivación inmediata.</div>
+                </div>
+                <div class="box" style="border-top: 4px solid var(--cat2-amber);">
+                    <div class="chip c2">Categoría 2</div>
+                    <p style="font-size:9pt; margin-top:5px;">Trauma inestable, medicación compleja o neuroticismo alto.</p>
+                    <div style="color:#92400E; font-weight:bold; font-size:9pt; background:#FFFBEB; padding:5px;">PAUSA. Requiere Eval. Profunda.</div>
+                </div>
+                <div class="box" style="border-top: 4px solid var(--cat3-blue);">
+                    <div class="chip c3">Categoría 3</div>
+                    <p style="font-size:9pt; margin-top:5px;">Dudas contextuales o expectativas mágicas.</p>
+                    <div style="color:#1E40AF; font-weight:bold; font-size:9pt; background:#EFF6FF; padding:5px;">AGENDAR CON ALERTA.</div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <span>USO INTERNO EXCLUSIVO</span>
+            <span>Página 1 de 6</span>
+        </footer>
+    </div>
+
+    <div class="page">
+        <header>
+            <div class="brand-block">
+                <h1>MOUNTAIN</h1>
+                <span>Guía Operativa de Screening Clínico</span>
+            </div>
+            <div class="meta-block">
+                DOC: MTN-SCR-SOP-02<br>
+                VER: 1.0<br>
+                <strong>ENTREVISTA ESTRUCTURADA</strong>
+            </div>
+        </header>
+
+        <h2>SOP-02: Entrevista Estructurada</h2>
+        <p><strong>Nota:</strong> Esta fase puede ser conducida por el médico/psicoterapeuta directamente.</p>
+
+        <div class="grid-2">
+            <div class="section">
+                <h3>1. Historial Médico</h3>
+                <div class="box">
+                    <ul>
+                        <li>Eventos cardíacos previos.</li>
+                        <li>Presión arterial actual.</li>
+                        <li>Cirugías recientes.</li>
+                        <li>Alergias severas.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="section">
+                <h3>2. Salud Mental</h3>
+                <div class="box">
+                    <ul>
+                        <li>Dx previos (formales/informales).</li>
+                        <li>Hospitalizaciones psiquiátricas.</li>
+                        <li>Intentos de autolesión.</li>
+                        <li>Ataques de pánico recientes.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="section">
+                <h3>3. Medicación Activa</h3>
+                <div class="box">
+                    <ul>
+                        <li>Nombre, dosis y frecuencia.</li>
+                        <li>Tiempo de consumo.</li>
+                        <li>Suplementos / Nootrópicos.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="section">
+                <h3>4. Historia Emocional</h3>
+                <div class="box">
+                    <ul>
+                        <li>Duelos o separaciones recientes.</li>
+                        <li>Traumas no procesados.</li>
+                        <li>Estabilidad emocional actual.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>7. Observación Clínica (Lenguaje)</h3>
+            <div class="box" style="background-color: #F3F4F6;">
+                <p>Evaluar coherencia del discurso, lenguaje corporal defensivo y regulación emocional durante la entrevista.</p>
+            </div>
+        </div>
+
+        <footer>
+            <span>USO INTERNO EXCLUSIVO</span>
+            <span>Página 2 de 6</span>
+        </footer>
+    </div>
+
+    <div class="page">
+        <header>
+            <div class="brand-block">
+                <h1>MOUNTAIN</h1>
+                <span>Guía Operativa de Screening Clínico</span>
+            </div>
+            <div class="meta-block">
+                DOC: MTN-SCR-SOP-03<br>
+                VER: 1.0<br>
+                <strong>CRITERIOS DE CLASIFICACIÓN</strong>
+            </div>
+        </header>
+
+        <h2>SOP-03: Criterios de Clasificación (RDR)</h2>
+
+        <div class="section">
+            <div class="box" style="border-left: 8px solid var(--cat1-red); background: #FFF5F5; margin-bottom: 20px;">
+                <h3 style="color: var(--cat1-red); margin-top:0;">CATEGORÍA 1: RIESGO MÉDICO / PSIQUIÁTRICO</h3>
+                <p><strong>Definición:</strong> Contraindicación absoluta o riesgo vital.</p>
+                <ul>
+                    <li>Enf. Cardiovascular grave.</li>
+                    <li>Epilepsia activa.</li>
+                    <li>Meds Psiquiátricos (ISRS/Antipsicóticos).</li>
+                    <li>Esquizofrenia / Bipolar I.</li>
+                </ul>
+                <div style="font-weight:bold; font-size: 1.1em; margin-top:10px;">ACCIÓN: DERIVACIÓN CLÍNICA OBLIGATORIA.</div>
+            </div>
+
+            <div class="box" style="border-left: 8px solid var(--cat2-amber); background: #FFFBEB; margin-bottom: 20px;">
+                <h3 style="color: #92400E; margin-top:0;">CATEGORÍA 2: RIESGO PSICOLÓGICO</h3>
+                <p><strong>Definición:</strong> Requiere estabilización previa.</p>
+                <ul>
+                    <li>Trauma inestable / Disociación.</li>
+                    <li>Trastornos de personalidad limítrofes.</li>
+                    <li>Desregulación emocional fuerte.</li>
+                </ul>
+                <div style="font-weight:bold; font-size: 1.1em; margin-top:10px;">ACCIÓN: PAUSA + PROTOCOLO PSICOTERAPÉUTICO.</div>
+            </div>
+
+            <div class="box" style="border-left: 8px solid var(--cat3-blue); background: #EFF6FF;">
+                <h3 style="color: var(--cat3-blue); margin-top:0;">CATEGORÍA 3: RIESGO CONTEXTUAL</h3>
+                <p><strong>Definición:</strong> Requiere ajuste de expectativas.</p>
+                <ul>
+                    <li>Consumo reciente (no adicción).</li>
+                    <li>Sin red de apoyo.</li>
+                    <li>Expectativas mágicas.</li>
+                </ul>
+                <div style="font-weight:bold; font-size: 1.1em; margin-top:10px;">ACCIÓN: CONSENTIMIENTO INFORMADO PERSONALIZADO.</div>
+            </div>
+        </div>
+
+        <footer>
+            <span>USO INTERNO EXCLUSIVO</span>
+            <span>Página 3 de 6</span>
+        </footer>
+    </div>
+
+    <div class="page">
+        <header>
+            <div class="brand-block">
+                <h1>MOUNTAIN</h1>
+                <span>Guía Operativa de Screening Clínico</span>
+            </div>
+            <div class="meta-block">
+                DOC: MTN-SCR-SOP-04<br>
+                VER: 2.1<br>
+                <strong>ANAMNESIS Y DOCUMENTACIÓN</strong>
+            </div>
+        </header>
+
+        <h2>SOP-04: Anamnesis Multidisciplinaria</h2>
+        <p><strong>Protocolo:</strong> Evaluación segregada por competencia (Médica y Psicoterapéutica). Ambos profesionales acceden al historial pero reportan desde su especialidad.</p>
+
+        <div class="section">
+            <div class="eval-box eval-medical">
+                <div class="eval-header" style="color: var(--medical-teal); border-color: var(--medical-teal);">
+                    <span>ANAMNESIS MÉDICA</span>
+                    <span>Responsable: Médico</span>
+                </div>
+                <div class="grid-2">
+                    <div>
+                        <strong>Foco de Evaluación:</strong>
+                        <ul style="font-size:9pt; margin-top:2px;">
+                            <li>Sistema Cardiovascular (HTA, Ritmo).</li>
+                            <li>Metabolismo y Hábitos (Sueño, Dieta).</li>
+                            <li>Suplementación y Medicación.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <strong>Pruebas/Evidencia:</strong>
+                        <div style="border-bottom:1px dashed #99f6e4; height:20px;"></div>
+                        <div style="border-bottom:1px dashed #99f6e4; height:20px;"></div>
+                        <span style="font-size:8pt; color:#666;">(Ej: Analítica sanguínea, Electrocardiograma)</span>
+                    </div>
+                </div>
+                <div style="margin-top:10px; border-top:1px solid #ccfbf1; padding-top:5px;">
+                    <strong>Observación Clínica:</strong>
+                    <div style="border-bottom:1px dashed #99f6e4; height:20px; margin-bottom:5px;"></div>
+                    <div style="border-bottom:1px dashed #99f6e4; height:20px;"></div>
+                </div>
+                <div class="risk-selector" style="color: var(--medical-teal);">
+                    RIESGO MÉDICO DETECTADO: 
+                    <span class="risk-option">[ ] BAJO (Apto)</span>
+                    <span class="risk-option">[ ] MEDIO (Precaución)</span>
+                    <span class="risk-option">[ ] ALTO (No Apto)</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="eval-box eval-psych">
+                <div class="eval-header" style="color: var(--psych-purple); border-color: var(--psych-purple);">
+                    <span>ANAMNESIS PSICOTERAPÉUTICA</span>
+                    <span>Responsable: Psicólogo/a</span>
+                </div>
+                <div class="grid-2">
+                    <div>
+                        <strong>Foco de Evaluación:</strong>
+                        <ul style="font-size:9pt; margin-top:2px;">
+                            <li>Factores Emocionales y Trauma.</li>
+                            <li>Estructura de Personalidad.</li>
+                            <li>Antecedentes Familiares.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <strong>Pruebas/Evidencia:</strong>
+                        <div style="border-bottom:1px dashed #d8b4fe; height:20px;"></div>
+                        <div style="border-bottom:1px dashed #d8b4fe; height:20px;"></div>
+                        <span style="font-size:8pt; color:#666;">(Ej: Psicometría, Entrevista Profunda)</span>
+                    </div>
+                </div>
+                <div style="margin-top:10px; border-top:1px solid #f3e8ff; padding-top:5px;">
+                    <strong>Observación Clínica:</strong>
+                    <div style="border-bottom:1px dashed #d8b4fe; height:20px; margin-bottom:5px;"></div>
+                    <div style="border-bottom:1px dashed #d8b4fe; height:20px;"></div>
+                </div>
+                <div class="risk-selector" style="color: var(--psych-purple);">
+                    RIESGO PSIQUE DETECTADO: 
+                    <span class="risk-option">[ ] BAJO (Apto)</span>
+                    <span class="risk-option">[ ] MEDIO (Precaución)</span>
+                    <span class="risk-option">[ ] ALTO (No Apto)</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>SÍNTESIS Y CONSENTIMIENTO</h3>
+            <p style="font-size:9pt;">Basado en el cruce de ambas evaluaciones:</p>
+            <div class="box">
+                <div class="checklist-item">
+                    <div class="checkbox"></div> 
+                    <strong>CASO ESTÁNDAR (Riesgos Bajos):</strong> Se aplica <u>Consentimiento Informado General</u>.
+                </div>
+                <div class="checklist-item" style="background-color: #EFF6FF;">
+                    <div class="checkbox"></div> 
+                    <strong>CASO CONDICIONAL (Riesgo Medio en alguna área):</strong> Se aplica <u>Consentimiento Personalizado</u> detallando la condición de riesgo y la mitigación aceptada por el participante.
+                </div>
+                <div class="checklist-item" style="background-color: #FEF2F2;">
+                    <div class="checkbox"></div> 
+                    <strong>CASO NO APTO:</strong> Si Méd. o Psiq. marcan "ALTO", el proceso se detiene.
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <span>USO INTERNO EXCLUSIVO</span>
+            <span>Página 4 de 6</span>
+        </footer>
+    </div>
+
+    <div class="page">
+        <header>
+            <div class="brand-block">
+                <h1>MOUNTAIN</h1>
+                <span>Guía Operativa de Screening Clínico</span>
+            </div>
+            <div class="meta-block">
+                DOC: MTN-SCR-SOP-05<br>
+                VER: 1.0<br>
+                <strong>PROTOCOLO DE ACTUACIÓN</strong>
+            </div>
+        </header>
+
+        <h2>SOP-05: Protocolo de Actuación ante Riesgo</h2>
+        
+        <div class="section">
+            <h3>Paso 1: Detener y Validar</h3>
+            <div class="box">
+                <p>Si el médico o el psicoterapeuta detectan una bandera roja en su anamnesis, tienen <strong>poder de veto</strong> sobre el proceso.</p>
+                <div style="font-weight:bold; color: var(--cat1-red); text-align:center; border:1px solid var(--cat1-red); padding:5px;">EL CRITERIO CLÍNICO PREVALECE SOBRE EL DESEO DEL CLIENTE.</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>Paso 2: Ajuste de Consentimiento (Para Riesgo Medio)</h3>
+            <div class="box">
+                <p>Si el riesgo es manejable (Cat 2 o 3):</p>
+                <ol>
+                    <li>Redactar anexo al consentimiento.</li>
+                    <li>Explicar claramente al participante el factor de riesgo específico.</li>
+                    <li>Firma de aceptación de condiciones especiales.</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>Paso 3: Reprogramación Condicional</h3>
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div>Establecer por escrito qué documento o cambio debe ocurrir (ej: carta de su psiquiatra, resultados de lab).</div>
+            </div>
+            <div class="checklist-item">
+                <div class="checkbox"></div>
+                <div>Dar un plazo de enfriamiento si es necesario.</div>
+            </div>
+        </div>
+
+        <footer>
+            <span>USO INTERNO EXCLUSIVO</span>
+            <span>Página 5 de 6</span>
+        </footer>
+    </div>
+
+    <div class="page">
+        <header>
+            <div class="brand-block">
+                <h1>MOUNTAIN</h1>
+                <span>Guía Operativa de Screening Clínico</span>
+            </div>
+            <div class="meta-block">
+                DOC: MTN-SCR-FLOW<br>
+                VER: 2.0<br>
+                <strong>DIAGRAMA DE DECISIÓN</strong>
+            </div>
+        </header>
+
+        <h2 style="text-align: center; border: none;">Árbol de Decisión Operativa</h2>
+
+        <div class="flow-container">
+            <div class="node" style="background: #E5E7EB;">SOLICITUD DE PARTICIPANTE</div>
+            <div class="arrow-down"></div>
+            
+            <div class="node">SOP-01: PRE-SCREEN (Filtro Rápido)</div>
+            <div class="arrow-down"></div>
+            
+            <div class="decision-fork" style="width: 90%;">
+                <div class="branch" style="border-top:none; flex:1;">
+                    <div class="node" style="width:95%; background: var(--medical-bg); border-color: var(--medical-teal);">
+                        <strong>ANAMNESIS MÉDICA</strong><br>
+                        <span style="font-size:8pt;">(Fisiológica / Farmacológica)</span>
+                    </div>
+                </div>
+                <div class="branch" style="border-top:none; flex:1;">
+                    <div class="node" style="width:95%; background: var(--psych-bg); border-color: var(--psych-purple);">
+                        <strong>ANAMNESIS PSICOTERAPÉUTICA</strong><br>
+                        <span style="font-size:8pt;">(Emocional / Estructural)</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="arrow-down"></div>
+            <div class="node" style="border-style: dashed;">EVALUACIÓN DE RIESGO CRUZADA</div>
+            <div class="arrow-down"></div>
+
+            <div class="decision-fork">
+                <div class="branch">
+                    <div class="chip c1">RIESGO ALTO</div>
+                    <div style="font-size: 8pt; color: var(--cat1-red); font-weight:bold; margin: 5px 0;">NO APTO</div>
+                    <div class="node" style="width: 90%; background: var(--cat1-bg); border-color: var(--cat1-red);">
+                        <strong>STOP</strong>
+                    </div>
+                    <div class="arrow-down"></div>
+                    <div class="node" style="width: 90%; font-size: 8pt;">
+                        Derivar a especialista externo.
+                    </div>
+                </div>
+
+                <div class="branch">
+                    <div class="chip c2">RIESGO MEDIO</div>
+                    <div style="font-size: 8pt; color: #92400E; font-weight:bold; margin: 5px 0;">CONDICIONAL</div>
+                    <div class="node" style="width: 90%; background: var(--cat2-bg); border-color: var(--cat2-amber);">
+                        <strong>AJUSTE</strong>
+                    </div>
+                    <div class="arrow-down"></div>
+                    <div class="node" style="width: 90%; font-size: 8pt;">
+                        Consentimiento Personalizado.<br>
+                        + Mitigación.
+                    </div>
+                </div>
+
+                <div class="branch">
+                    <div class="chip c3">RIESGO BAJO</div>
+                    <div style="font-size: 8pt; color: var(--cat3-blue); font-weight:bold; margin: 5px 0;">APTO</div>
+                    <div class="node" style="width: 90%; background: var(--cat3-bg); border-color: var(--cat3-blue);">
+                        <strong>PROCEDER</strong>
+                    </div>
+                    <div class="arrow-down"></div>
+                    <div class="node" style="width: 90%; font-size: 8pt;">
+                        Consentimiento General.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <span>USO INTERNO EXCLUSIVO</span>
+            <span>Página 6 de 6</span>
+        </footer>
+    </div>
+
+</body>
+</html>
